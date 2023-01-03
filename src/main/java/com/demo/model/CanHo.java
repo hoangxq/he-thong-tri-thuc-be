@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "can_ho")
+@Table(name = "tbl_can_ho")
 public class CanHo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,10 +15,12 @@ public class CanHo {
     private Double dienTich;
     @Column(name = "gia")
     private Double giaTien;
-    @Column(name = "huong")
-    private String huong;
-    @Column(name = "quan_huyen")
-    private String quanHuyen;
+    @ManyToOne
+    @JoinColumn(name = "id_tbl_huong")
+    private Huong huong;
+    @ManyToOne
+    @JoinColumn(name = "id_tbl_phuong_xa")
+    private PhuongXa phuongXa;
     @Column(name = "so_phong_ngu")
     private int soPhongNgu;
     @Column(name = "so_phong_wc")
