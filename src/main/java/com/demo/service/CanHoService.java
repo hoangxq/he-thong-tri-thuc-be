@@ -9,4 +9,5 @@ public interface CanHoService {
     List<CanHoRes> getAllCanHoDaXuLy();
     List<CanHoRes> getAllCanHoDangXuLy();
     CanHoRes dinhGiaCanHo(CanHoReq canHoReq);
+    CanHoRes themMoiCanHo(CanHoReq canHoReq);
 }

@@ -15,9 +15,8 @@ public class CanHo {
     private Double dienTich;
     @Column(name = "gia")
     private Double giaTien;
-    @ManyToOne
-    @JoinColumn(name = "id_tbl_huong")
-    private Huong huong;
+    @Column(name = "huong")
+    private String huong;
     @ManyToOne
     @JoinColumn(name = "id_tbl_phuong_xa")
     private PhuongXa phuongXa;

@@ -22,4 +22,9 @@ public class PhuongXaController {
     public ResponseEntity<?> createPhuongXa(@RequestBody PhuongXaRequest phuongXaRequest){
         return ResponseEntity.ok(phuongXaService.createPhuongXa(phuongXaRequest));
     }
+
+    @GetMapping("/quan-huyen/{idQuanHuyen}")
+    public ResponseEntity<?> getPhuongXaByQuanHuyen(@PathVariable Integer idQuanHuyen){
+        return ResponseEntity.ok(phuongXaService.getPhuongXaByQuanHuyen(idQuanHuyen));
+    }
 }

@@ -8,7 +8,7 @@ public class CanHoRes {
     private Long id;
     private Double dienTich;
     private Double giaTien;
-    private Huong huong;
+    private String huong;
     private PhuongXaResponse phuongXaRes;
     private int soPhongNgu;
     private int soPhongWc;

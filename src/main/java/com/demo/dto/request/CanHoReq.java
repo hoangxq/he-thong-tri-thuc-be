@@ -7,8 +7,9 @@ import lombok.Data;
 @Data
 public class CanHoReq {
     private Double dienTich;
-    private Huong huong;
-    private PhuongXaResponse phuongXaRes;
+    private String huong;
+    private Long idPhuongXa;
     private int soPhongNgu;
     private int soPhongWc;
+    private Double giaTien;
 }
