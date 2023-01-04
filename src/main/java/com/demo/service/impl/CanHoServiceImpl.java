@@ -91,7 +91,7 @@ public class CanHoServiceImpl implements CanHoService {
 //            log.error(canHoSource.getId()+";"+doTuongDongTrungBinh+";"+giaTien);
 //            log.error(canHoSource.getId()+";"+doTuongDongDienTich+";"+doTuongDongQuanHuyen+";"+doTuongDongSoPhongNgu+";"+doTuongDongSoPhongWc+";"+doTuongDongHuong);
 
-            if (doTuongDongTrungBinh >= 0.7){
+            if (doTuongDongTrungBinh >= 0.8){
                 giaTien += canHoSource.getGiaTien() * doTuongDongTrungBinh;
                 count++;
             }
@@ -102,7 +102,9 @@ public class CanHoServiceImpl implements CanHoService {
         canHo.setTrangThai(TrangThai.DANG_XU_LY);
 //        log.error(canHo.getGiaTien()+"");
 
-        return modelMapper.map(canHoRepository.save(canHo), CanHoRes.class);
+        var canHoRes = modelMapper.map(canHoRepository.save(canHo), CanHoRes.class);
+        canHoRes.setPhuongXaRes(modelMapper.map(canHo.getPhuongXa(), PhuongXaResponse.class));
+        return canHoRes;
     }
 
     @Override
@@ -129,7 +131,9 @@ public class CanHoServiceImpl implements CanHoService {
         var canHo = canHoRepository.findById(idCanHo).get();
         mappingHelper.mapIfSourceNotNullAndStringNotBlank(canHoReq, canHo);
         canHo.setPhuongXa(phuongXaRepository.findById(canHoReq.getIdPhuongXa()).get());
-        return modelMapper.map(canHoRepository.save(canHo), CanHoRes.class);
+        var canHoRes = modelMapper.map(canHoRepository.save(canHo), CanHoRes.class);
+        canHoRes.setPhuongXaRes(modelMapper.map(canHo.getPhuongXa(), PhuongXaResponse.class));
+        return canHoRes;
     }
 
     @Override
