@@ -11,6 +11,7 @@ import com.demo.repository.CanHoRepository;
 import com.demo.repository.PhuongXaRepository;
 import com.demo.service.CanHoService;
 import com.demo.service.XuLyDoTuongDong;
+import com.demo.service.utils.MappingHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 public class CanHoServiceImpl implements CanHoService {
     private final CanHoRepository canHoRepository;
     private final ModelMapper modelMapper;
+    private final MappingHelper mappingHelper;
     private final XuLyDoTuongDong xuLyDoTuongDong;
     private final PhuongXaRepository phuongXaRepository;
 
@@ -121,4 +123,23 @@ public class CanHoServiceImpl implements CanHoService {
 
         return modelMapper.map(canHoRepository.save(canHo), CanHoRes.class);
     }
+
+    @Override
+    public CanHoRes capNhatCanHo(Long idCanHo, CanHoReq canHoReq) {
+        var canHo = canHoRepository.findById(idCanHo).get();
+        mappingHelper.mapIfSourceNotNullAndStringNotBlank(canHoReq, canHo);
+        canHo.setPhuongXa(phuongXaRepository.findById(canHoReq.getIdPhuongXa()).get());
+        return modelMapper.map(canHoRepository.save(canHo), CanHoRes.class);
+    }
+
+    @Override
+    public CanHoRes getCanHoById(Long idCanHo) {
+        return canHoRepository.findById(idCanHo)
+                .map(e -> {
+                        var res = modelMapper.map(e, CanHoRes.class);
+                        res.setPhuongXaRes(modelMapper.map(e.getPhuongXa(), PhuongXaResponse.class));
+                        return res;
+                }).get();
+    }
+
 }

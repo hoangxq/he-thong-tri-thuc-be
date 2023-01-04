@@ -10,4 +10,6 @@ public interface CanHoService {
     List<CanHoRes> getAllCanHoDangXuLy();
     CanHoRes dinhGiaCanHo(CanHoReq canHoReq);
     CanHoRes themMoiCanHo(CanHoReq canHoReq);
+    CanHoRes capNhatCanHo(Long idCanHo, CanHoReq canHoReq);
+    CanHoRes getCanHoById(Long idCanHo);
 }

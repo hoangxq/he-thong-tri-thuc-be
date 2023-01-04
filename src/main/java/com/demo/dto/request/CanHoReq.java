@@ -12,4 +12,5 @@ public class CanHoReq {
     private int soPhongNgu;
     private int soPhongWc;
     private Double giaTien;
+    private String trangThai;
 }
