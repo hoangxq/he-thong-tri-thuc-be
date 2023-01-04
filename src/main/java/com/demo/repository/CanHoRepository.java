@@ -8,6 +8,12 @@ import java.util.Optional;
 
 public interface CanHoRepository extends JpaRepository<CanHo, Long> {
     List<CanHo> findAllByTrangThai(String trangThai);
-    Optional<CanHo> findByDienTichAndAndPhuongXa_IdAndSoPhongNguAndSoPhongWcAndHuong(Double dienTich, Long idPhuongXa, int soPhongNgu,
-                                                                                     int soPhongWc, String huong);
+
+    Optional<CanHo> findByDienTichAndPhuongXa_IdAndSoPhongNguAndSoPhongWcAndHuong(Double dienTich, Long idPhuongXa, int soPhongNgu,
+                                                                                  int soPhongWc, String huong);
+
+    List<CanHo> findByDienTichAndPhuongXa_IdAndSoPhongNguAndHuongAndSoPhongWc(Double dienTich, Long idPhuongXa, int soPhongNgu, String huong,
+                                                                              int soPhongWc);
+
+    void deleteById(Long id);
 }

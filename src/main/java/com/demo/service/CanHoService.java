@@ -12,4 +12,5 @@ public interface CanHoService {
     CanHoRes themMoiCanHo(CanHoReq canHoReq);
     CanHoRes capNhatCanHo(Long idCanHo, CanHoReq canHoReq);
     CanHoRes getCanHoById(Long idCanHo);
+    void xoaCanHo(Long idCanHo);
 }

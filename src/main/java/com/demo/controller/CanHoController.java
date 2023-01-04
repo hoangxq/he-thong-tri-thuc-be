@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 import com.demo.dto.request.CanHoReq;
+import com.demo.dto.response.MessageRes;
 import com.demo.service.CanHoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,5 +44,11 @@ public class CanHoController {
     @PutMapping("/{idCanHo}")
     public ResponseEntity<?> capNhatCanHo(@PathVariable Long idCanHo, @RequestBody CanHoReq canHoReq){
         return ResponseEntity.ok(canHoService.capNhatCanHo(idCanHo, canHoReq));
+    }
+
+    @DeleteMapping("/{idCanHo}")
+    public ResponseEntity<?> xoaCanHo(@PathVariable Long idCanHo){
+        canHoService.xoaCanHo(idCanHo);
+        return ResponseEntity.ok(new MessageRes("Removed"));
     }
 }

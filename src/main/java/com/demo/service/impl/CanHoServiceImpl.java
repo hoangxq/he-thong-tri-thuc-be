@@ -52,7 +52,7 @@ public class CanHoServiceImpl implements CanHoService {
 
     @Override
     public CanHoRes dinhGiaCanHo(CanHoReq canHoReq) {
-        var canHoResponse = canHoRepository.findByDienTichAndAndPhuongXa_IdAndSoPhongNguAndSoPhongWcAndHuong(
+        var canHoResponse = canHoRepository.findByDienTichAndPhuongXa_IdAndSoPhongNguAndSoPhongWcAndHuong(
                 canHoReq.getDienTich(), canHoReq.getIdPhuongXa(), canHoReq.getSoPhongNgu(),
                 canHoReq.getSoPhongWc(), canHoReq.getHuong()
         ).map(e -> {
@@ -109,7 +109,7 @@ public class CanHoServiceImpl implements CanHoService {
 
     @Override
     public CanHoRes themMoiCanHo(CanHoReq canHoReq) {
-        var canHoResponse = canHoRepository.findByDienTichAndAndPhuongXa_IdAndSoPhongNguAndSoPhongWcAndHuong(
+        var canHoResponse = canHoRepository.findByDienTichAndPhuongXa_IdAndSoPhongNguAndSoPhongWcAndHuong(
                 canHoReq.getDienTich(), canHoReq.getIdPhuongXa(), canHoReq.getSoPhongNgu(),
                 canHoReq.getSoPhongWc(), canHoReq.getHuong()
         ).map(e -> modelMapper.map(e, CanHoRes.class));
@@ -144,6 +144,28 @@ public class CanHoServiceImpl implements CanHoService {
                         res.setPhuongXaRes(modelMapper.map(e.getPhuongXa(), PhuongXaResponse.class));
                         return res;
                 }).get();
+    }
+
+    @Override
+    public void xoaCanHo(Long idCanHo) {
+        canHoRepository.deleteById(idCanHo);
+    }
+
+    private void cleanData(){
+        var listCanHo = canHoRepository.findAll();
+
+        for (int i = 0; i < listCanHo.size(); i++){
+            var canHo = listCanHo.get(i);
+            var res = canHoRepository.findByDienTichAndPhuongXa_IdAndSoPhongNguAndHuongAndSoPhongWc(
+                    canHo.getDienTich(), canHo.getPhuongXa().getId(), canHo.getSoPhongNgu(),
+                    canHo.getHuong(), canHo.getSoPhongWc()
+            );
+            if (res.size() > 1)
+                for (int j = 1; j < res.size(); j++)
+                    canHoRepository.delete(res.get(j));
+            if (canHo.getDienTich() < 20)
+                canHoRepository.delete(canHo);
+        }
     }
 
 }
