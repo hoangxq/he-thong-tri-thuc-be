@@ -2,6 +2,8 @@ package com.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
@@ -14,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Configuration
-public class SwaggerConfig {
+public class SwaggerConfig implements WebMvcConfigurer {
 
     private ApiKey apiKey() {
         return new ApiKey("JWT", "Authorization", "header");
@@ -55,4 +57,8 @@ public class SwaggerConfig {
                 Collections.emptyList());
     }
 
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addRedirectViewController("", "/kbs/swagger-ui.html");
+    }
 }

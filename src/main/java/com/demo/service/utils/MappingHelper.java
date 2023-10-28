@@ -6,8 +6,12 @@ import org.modelmapper.Condition;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class MappingHelper {
@@ -15,6 +19,18 @@ public class MappingHelper {
 
     public MappingHelper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+    }
+
+    public <T, H> List<T> mapList(List<H> inputData, Class<T> clazz) {
+        return CollectionUtils.isEmpty(inputData) ?
+                Collections.emptyList() :
+                inputData.stream()
+                        .map(i -> modelMapper.map(i, clazz))
+                        .collect(Collectors.toList());
+    }
+
+    public <T, H> T map(H inputData, Class<T> clazz) {
+        return modelMapper.map(inputData, clazz);
     }
 
     public <T, H> void mapIfSourceNotNullAndStringNotBlank(T source, H destination){
